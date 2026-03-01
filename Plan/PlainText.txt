@@ -1,0 +1,22 @@
+poka/
+├── .env                        # Environment variables (Gemini & Supabase keys)
+├── package.json                # Project dependencies and scripts
+├── tailwind.config.js          # Tailwind CSS configuration
+├── tsconfig.json               # TypeScript configuration
+├── assets/                     # Extension icons and static files
+│   └── icon.png
+├── core/                       # Core business logic and integrations
+│   ├── ai.ts                   # Gemini 1.5 Flash prompt logic & API calls
+│   ├── capture.ts              # Screen recording (getDisplayMedia) & screenshot logic [cite: 14, 32]
+│   ├── masking.ts              # Local Regex functions to blur PII (emails/cards) before sending [cite: 12, 38]
+│   └── supabase.ts             # Supabase client setup for DB and Storage
+├── background/                 # Background Service Worker
+│   ├── index.ts                # Handles cross-origin API requests, auth state, and heavy lifting
+│   └── ports/                  # (Optional) Messaging ports for real-time video chunking
+├── contents/                   # Content Scripts injected into the host website
+│   ├── index.ts                # Injects the UI button (if needed) and handles Shadow DOM [cite: 32]
+│   └── listener.ts             # Wraps console.error and window.fetch to capture technical logs
+├── popup/                      # The actual extension UI
+│   └── index.tsx               # The "One-Click Snap" interface built with React
+└── tabs/                       # Full-page web views managed by the extension
+    └── dashboard.tsx           # The local dashboard for managing previous "Snaps"
