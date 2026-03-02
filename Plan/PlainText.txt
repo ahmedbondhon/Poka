@@ -1,22 +1,38 @@
 poka/
-├── .env                        # Environment variables (Gemini & Supabase keys)
-├── package.json                # Project dependencies and scripts
-├── tailwind.config.js          # Tailwind CSS configuration
-├── tsconfig.json               # TypeScript configuration
-├── assets/                     # Extension icons and static files
-│   └── icon.png
-├── core/                       # Core business logic and integrations
-│   ├── ai.ts                   # Gemini 1.5 Flash prompt logic & API calls
-│   ├── capture.ts              # Screen recording (getDisplayMedia) & screenshot logic [cite: 14, 32]
-│   ├── masking.ts              # Local Regex functions to blur PII (emails/cards) before sending [cite: 12, 38]
-│   └── supabase.ts             # Supabase client setup for DB and Storage
-├── background/                 # Background Service Worker
-│   ├── index.ts                # Handles cross-origin API requests, auth state, and heavy lifting
-│   └── ports/                  # (Optional) Messaging ports for real-time video chunking
-├── contents/                   # Content Scripts injected into the host website
-│   ├── index.ts                # Injects the UI button (if needed) and handles Shadow DOM [cite: 32]
-│   └── listener.ts             # Wraps console.error and window.fetch to capture technical logs
-├── popup/                      # The actual extension UI
-│   └── index.tsx               # The "One-Click Snap" interface built with React
-└── tabs/                       # Full-page web views managed by the extension
-    └── dashboard.tsx           # The local dashboard for managing previous "Snaps"
+├── .env.example                 # Environment variables template
+├── package.json                 # Extension dependencies
+├── tailwind.config.js
+├── tsconfig.json
+├── assets/
+│   └── icon.png                 # Placeholder – add your own
+├── core/
+│   ├── ai.ts                    # Backend API client for diagnosis
+│   ├── capture.ts               # Screen recording & screenshot logic
+│   ├── masking.ts               # PII masking (regex + blur)
+│   └── supabase.ts              # Supabase client (anon key, RLS)
+├── background/
+│   ├── index.ts                  # Service worker: handles API calls, auth
+│   └── ports/                    # (optional – for future real‑time)
+├── contents/
+│   ├── index.ts                  # Injects UI button, sets up shadow DOM
+│   └── listener.ts               # Captures console, fetch, errors
+├── popup/
+│   └── index.tsx                 # One‑click snap UI
+├── tabs/
+│   └── dashboard.tsx             # Local dashboard (extension tab)
+├── backend/                       # Backend API (deploy separately)
+│   ├── package.json
+│   ├── tsconfig.json
+│   ├── index.ts                   # Entry point (Express)
+│   ├── routes/
+│   │   ├── diagnose.ts            # POST /api/diagnose
+│   │   └── snap.ts                # POST /api/snap (optional)
+│   ├── middleware/
+│   │   ├── rateLimiter.ts
+│   │   ├── validate.ts
+│   │   └── auth.ts
+│   ├── lib/
+│   │   ├── gemini.ts
+│   │   └── supabase.ts
+│   └── .env.example
+└── README.md
