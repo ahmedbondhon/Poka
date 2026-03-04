@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { supabase } from '~core/supabase';
+import { supabase } from '../core/supabase';
 
 export default function Dashboard() {
   const [snaps, setSnaps] = useState<any[]>([]);
