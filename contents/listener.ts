@@ -1,5 +1,13 @@
 // This script runs in the context of the web page
 // It intercepts console errors and network requests.
+export {};
+
+// Extend XMLHttpRequest to allow custom _poka metadata
+declare global {
+  interface XMLHttpRequest {
+    _poka?: { method: string; url: string };
+  }
+}
 
 const consoleErrors: string[] = [];
 const networkLogs: any[] = [];
@@ -32,7 +40,7 @@ window.fetch = async function(input, init) {
     const duration = performance.now() - start;
     networkLogs.push({
       type: 'fetch',
-      url: typeof input === 'string' ? input : input.url,
+      url: typeof input === 'string' ? input : input instanceof URL ? input.href : input.url,
       method: init?.method || 'GET',
       status: cloned.status,
       duration,
@@ -42,7 +50,7 @@ window.fetch = async function(input, init) {
   } catch (error) {
     networkLogs.push({
       type: 'fetch',
-      url: typeof input === 'string' ? input : input.url,
+      url: typeof input === 'string' ? input : input instanceof URL ? input.href : input.url,
       method: init?.method || 'GET',
       error: String(error),
       timestamp: new Date().toISOString()
@@ -52,9 +60,16 @@ window.fetch = async function(input, init) {
 };
 
 // Intercept XHR
-XMLHttpRequest.prototype.open = function(method, url, async, user, password) {
+XMLHttpRequest.prototype.open = function(
+  this: XMLHttpRequest,
+  method: string,
+  url: string | URL,
+  async: boolean = true,
+  user?: string | null,
+  password?: string | null
+) {
   this._poka = { method, url: url.toString() };
-  return originalXHROpen.call(this, method, url, async, user, password);
+  return (originalXHROpen as Function).call(this, method, url, async, user, password);
 };
 
 XMLHttpRequest.prototype.send = function(body) {

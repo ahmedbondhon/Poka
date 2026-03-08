@@ -3,7 +3,7 @@ import html2canvas from 'html2canvas';
 // Capture screenshot of current tab (via chrome.tabs API)
 export async function captureScreenshot(): Promise<string> {
   return new Promise((resolve, reject) => {
-    chrome.tabs.captureVisibleTab(null, { format: 'png' }, (dataUrl) => {
+    chrome.tabs.captureVisibleTab({ format: 'png' }, (dataUrl) => {
       if (chrome.runtime.lastError) {
         reject(chrome.runtime.lastError);
       } else {
