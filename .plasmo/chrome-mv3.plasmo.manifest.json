@@ -28,7 +28,7 @@
         "<all_urls>"
       ],
       "js": [
-        "..\\contents\\index.ts"
+        "..\\contents\\listener.ts"
       ]
     },
     {
@@ -36,7 +36,7 @@
         "<all_urls>"
       ],
       "js": [
-        "..\\contents\\listener.ts"
+        "..\\contents\\index.ts"
       ]
     }
   ]
