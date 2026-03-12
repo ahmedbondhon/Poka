@@ -14,3 +14,7 @@ obj/
 
 # Environment secrets
 .env
+# Environment files
+.env
+.env.local
+.env.*.local
