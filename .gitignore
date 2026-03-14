@@ -18,3 +18,4 @@ obj/
 .env
 .env.local
 .env.*.local
+.env.example
